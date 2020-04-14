@@ -31,8 +31,5 @@ $bus($container);
 $renderer = require_once __DIR__ . '/../config/renderer.php';
 $renderer($container);
 
-$mailer = require_once __DIR__ . '/../config/mailer.php';
-$mailer($container);
-
 return $container;
 
