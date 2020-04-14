@@ -18,5 +18,14 @@ return function (App $app) {
     $app->add(Middleware\CorsMiddleware::class);
     $app->add(Middleware\NotFoundExceptionMiddleware::class);
 
+    $app->options('/v1/{routes:.+}', function ($request, $response, $args) {
+        return $response;
+    });
 
+    $app->get('/', ApiAction\IndexAction::class);
+    $app->get('/v1', ApiAction\IndexAction::class);
+
+    $app->group('/v1/auth', function (Group $group) {
+        $group->post('/login', ApiAction\Auth\LoginAction::class);
+    });
 };

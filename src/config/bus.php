@@ -15,8 +15,7 @@ return function (Container $container) {
         function () use ($container) {
 
             $config = [
-
-
+                Command\User\Command\LoginUserCommand::class => Command\User\Handler\LoginUserHandler::class,
 
             ];
 

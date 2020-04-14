@@ -1,0 +1,16 @@
+### login auth
+POST {{host-url}}/auth/login
+Cache-Control: no-cache
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "job@sadykh.ru",
+  "password": "BRTtKQwG"
+}
+
+> {%
+client.global.set('token', response.body.token);
+%}
+
+###

@@ -33,7 +33,6 @@ return function (Container $container) {
                 Type\User\UserPasswordType::NAME => Type\User\UserPasswordType::class,
                 Type\User\UserRoleType::NAME => Type\User\UserRoleType::class,
                 Type\User\UserNameType::NAME => Type\User\UserNameType::class,
-
             ];
 
             foreach ($types as $type => $class) {
@@ -42,7 +41,8 @@ return function (Container $container) {
                 }
             }
 
-            $connection = ['url' => getenv('APP_DB_URL')];
+//            $connection = ['url' => getenv('APP_DB_URL')];
+            $connection = ['url' => 'mysql://user:password@mysql/app?charset=utf8'];
 
             return EntityManager::create($connection, $config);
         }

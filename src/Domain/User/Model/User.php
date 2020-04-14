@@ -33,8 +33,6 @@ class User implements AggregateRoot
 
     private $name;
 
-    private Status $status;
-
     /**
      * Constructor.
      * @param UserId                       $id
