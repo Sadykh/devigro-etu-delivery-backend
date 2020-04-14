@@ -1,1 +1,4 @@
 /vendor/
+/var/logs/*
+/var/cache/*
+/var/docker/*
