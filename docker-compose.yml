@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+
+  nginx:
+    container_name: devigro-etu-delivery-backend-nginx
+    build:
+      context: ./docker
+      dockerfile: nginx.docker
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www
+      - ./var/logs/nginx/:/var/logs/nginx
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    container_name: devigro-etu-delivery-backend-php-fpm
+    build:
+      context: ./docker
+      dockerfile: php-fpm.docker
+    volumes:
+      - ./src:/var/www
+    depends_on:
+      - mysql
+    links:
+      - mysql
+
+  php-cli:
+    container_name: devigro-etu-delivery-backend-php-cli
+    build:
+      context: ./docker
+      dockerfile: php-cli.docker
+    volumes:
+      - ./src:/var/www
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    working_dir: /var/www
+    tty: true
+
+  mysql:
+    container_name: devigro-etu-delivery-backend-mysql
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./var/docker/mysql:/var/lib/mysql
+    environment:
+        MYSQL_DATABASE: "app"
+        MYSQL_USER: "user"
+        MYSQL_PASSWORD: "password"
+        MYSQL_ROOT_PASSWORD: "root_password"
