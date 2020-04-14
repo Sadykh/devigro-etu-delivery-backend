@@ -5,19 +5,20 @@
                                       https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\Domain\User\Model\User" table="`user`">
-        <id name="id" column="id" type="user_id" />
-        <field name="role" column="role" type="user_role" nullable="false" />
-        <field name="email" column="email" type="user_email" length="64" nullable="false" />
-        <field name="name" column="name" type="user_name" length="64" nullable="false" />
-        <field name="password" column="password" type="user_password" length="64" nullable="true" />
+        <id name="id" column="id" type="user_id"/>
+        <field name="role" column="role" type="user_role" nullable="false"/>
+        <field name="email" column="email" type="user_email" length="64" nullable="false"/>
+        <field name="name" column="name" type="user_name" length="64" nullable="false"/>
+        <field name="passwordHash" column="password_hash" type="user_password" length="64" nullable="true"/>
+        <field name="authToken" column="auth_token" type="user_auth_token" length="64" nullable="true"/>
         <field name="isRemoved" column="is_removed" type="boolean" nullable="false">
             <options>
                 <option name="default">false</option>
             </options>
         </field>
-        <field name="createdAt" column="created_at" type="datetime_immutable" nullable="false" />
-        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true" />
-        <field name="removedAt" column="removed_at" type="datetime_immutable" nullable="true" />
+        <field name="createdAt" column="created_at" type="datetime_immutable" nullable="false"/>
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true"/>
+        <field name="removedAt" column="removed_at" type="datetime_immutable" nullable="true"/>
     </entity>
 
 </doctrine-mapping>

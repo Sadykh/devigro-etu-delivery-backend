@@ -1,12 +1,43 @@
-### login auth
+### valid login admin auth
 POST {{host-url}}/auth/login
 Cache-Control: no-cache
 Content-Type: application/json
 Accept: application/json
 
 {
-  "username": "job@sadykh.ru",
-  "password": "BRTtKQwG"
+  "username": "admin@devigro.ru",
+  "password": "eltech"
+}
+
+> {%
+client.global.set('token', response.body.token);
+%}
+
+
+### valid login courier auth
+POST {{host-url}}/auth/login
+Cache-Control: no-cache
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "courier@devigro.ru",
+  "password": "eltech"
+}
+
+> {%
+client.global.set('token', response.body.token);
+%}
+
+### imvalid login auth
+POST {{host-url}}/auth/login
+Cache-Control: no-cache
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "admin@devigro.ru",
+  "password": "qweqweqwe"
 }
 
 > {%

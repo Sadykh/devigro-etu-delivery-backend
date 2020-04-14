@@ -33,6 +33,7 @@ return function (Container $container) {
                 Type\User\UserPasswordType::NAME => Type\User\UserPasswordType::class,
                 Type\User\UserRoleType::NAME => Type\User\UserRoleType::class,
                 Type\User\UserNameType::NAME => Type\User\UserNameType::class,
+                Type\User\UserAuthTokenType::NAME => Type\User\UserAuthTokenType::class,
             ];
 
             foreach ($types as $type => $class) {

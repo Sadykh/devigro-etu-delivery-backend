@@ -6,12 +6,19 @@ namespace App\Domain\User\ValueObject\User;
 
 use App\Domain\Common\ValueObject\AbstractEnum;
 
-/**
- * Role.
- */
 class Role extends AbstractEnum
 {
-    const ADMINISTRATOR = 100;
-    const CLIENT = 200;
-    const EMPLOYEE = 300;
+    public const ADMIN = 100;
+
+    public const COURIER = 200;
+
+    public function isAdmin(): bool
+    {
+        return $this->getValue() === self::ADMIN;
+    }
+
+    public function isCourier(): bool
+    {
+        return $this->getValue() === self::COURIER;
+    }
 }

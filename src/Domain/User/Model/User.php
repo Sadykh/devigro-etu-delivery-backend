@@ -8,14 +8,15 @@ use App\Domain\Common\Model\AggregateRoot;
 use App\Domain\Common\Model\EventTrait;
 use App\Domain\Common\Model\SoftRemovableTrait;
 use App\Domain\Common\Model\TimestampableTrait;
+use App\Domain\User\ValueObject\User\AuthToken;
 use App\Domain\User\ValueObject\User\Email;
 use App\Domain\User\Service\PasswordHasherInterface;
 use App\Domain\User\Specification\UniqueUserEmailSpecification;
 use App\Domain\User\ValueObject\User\Name;
 use App\Domain\User\ValueObject\User\Password;
 use App\Domain\User\ValueObject\User\Role;
-use App\Domain\User\ValueObject\User\Status;
 use App\Domain\User\ValueObject\UserId;
+use InvalidArgumentException;
 
 class User implements AggregateRoot
 {
@@ -29,47 +30,41 @@ class User implements AggregateRoot
 
     private Email $email;
 
-    private ?Password $password;
+    private Password $passwordHash;
 
-    private $name;
+    private Name $name;
+
+    private AuthToken $authToken;
 
     /**
-     * Constructor.
+     * User constructor.
      * @param UserId                       $id
      * @param Role                         $role
      * @param Email                        $email
-     * @param Name|null                    $name
+     * @param Password                     $passwordHash
+     * @param Name                         $name
+     * @param AuthToken                    $authToken
      * @param UniqueUserEmailSpecification $uniqueUserEmailSpecification
      */
-    public function __construct(
-        UserId $id,
-        Role $role,
-        Email $email,
-        ?Name $name,
-        UniqueUserEmailSpecification $uniqueUserEmailSpecification
-    )
+    public function __construct(UserId $id, Role $role, Email $email, Password $passwordHash, Name $name, AuthToken $authToken, UniqueUserEmailSpecification $uniqueUserEmailSpecification)
     {
         $this->id = $id;
         $this->role = $role;
         $this->email = $email;
-        $this->password = null;
+        $this->passwordHash = $passwordHash;
         $this->name = $name;
-        $this->status = new Status(Status::PENDING_CONFIRMATION);
+        $this->authToken = $authToken;
         $this->triggerCreatedAt();
 
         if (!$uniqueUserEmailSpecification->isSatisfiedBy($this)) {
-            throw new \InvalidArgumentException('Пользователь с таким e-mail уже зарегистрирован');
+            throw new InvalidArgumentException('Пользователь с таким e-mail уже зарегистрирован');
         }
     }
 
     public function login(Password $password, PasswordHasherInterface $passwordHasher): void
     {
-        if (!$passwordHasher->validate((string) $this->getPassword(), (string) $password)) {
-            throw new \InvalidArgumentException('Неверный пользователь или пароль');
-        }
-
-        if (!$this->status->isActive()) {
-            throw new \DomainException('Пользователь не активен');
+        if (!$passwordHasher->validate((string) $this->getPasswordHash(), (string) $password)) {
+            throw new InvalidArgumentException('Неверный пользователь или пароль');
         }
     }
 
@@ -98,14 +93,6 @@ class User implements AggregateRoot
     }
 
     /**
-     * @return Password|null
-     */
-    public function getPassword(): ?Password
-    {
-        return $this->password;
-    }
-
-    /**
      * @return Name
      */
     public function getName(): Name
@@ -114,11 +101,26 @@ class User implements AggregateRoot
     }
 
     /**
-     * @return Status
+     * @return Password
      */
-    public function getStatus(): Status
+    public function getPasswordHash(): Password
     {
-        return $this->status;
+        return $this->passwordHash;
     }
 
+    /**
+     * @return AuthToken
+     */
+    public function getAuthToken(): AuthToken
+    {
+        return $this->authToken;
+    }
+
+    /**
+     * @param AuthToken $authToken
+     */
+    public function setAuthToken(AuthToken $authToken): void
+    {
+        $this->authToken = $authToken;
+    }
 }

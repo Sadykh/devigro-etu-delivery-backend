@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Http\Api\Action\Auth;
 
 use App\Application\Command\User\Command\LoginUserCommand;
+use App\Domain\User\Model\User;
 use App\UI\Http\Api\Action\AbstractAction;
 use Assert\Assert;
 use Psr\Http\Message\ResponseInterface;
@@ -18,9 +19,10 @@ class LoginAction extends AbstractAction
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $command = $this->deserialize($request);
+        /** @var User $result */
         $result = $this->bus->handle($command);
 
-        return $this->asJson(['token' => $result]);
+        return $this->asJson(['token' => (string)$result->getAuthToken(), 'role' => $result->getRole()->getName()]);
     }
 
     private function deserialize(ServerRequestInterface $request): LoginUserCommand

@@ -21,7 +21,7 @@ $entityManager = $container->get(EntityManagerInterface::class);
 
 $connection = $entityManager->getConnection();
 $configuration = new Configuration($connection);
-$configuration->setMigrationsDirectory(__DIR__ . '/../src/Infrastructure/Migrations');
+$configuration->setMigrationsDirectory(__DIR__ . '/../Infrastructure/Migrations');
 $configuration->setMigrationsNamespace('App\Infrastructure\Migrations');
 
 $helperSet = $cli->getHelperSet();

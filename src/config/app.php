@@ -12,6 +12,10 @@ return function (Container $container) {
         return $container->get(Infrastructure\Flusher::class);
     });
 
+    $container->set(Domain\User\Service\UserServiceInterface::class, function () use ($container) {
+        return $container->get(Infrastructure\Service\User\UserService::class);
+    });
+
     $container->set(Domain\User\Service\AuthTokenManagerInterface::class, function () use ($container) {
         return $container->get(Infrastructure\Service\User\AuthTokenManager::class);
     });
