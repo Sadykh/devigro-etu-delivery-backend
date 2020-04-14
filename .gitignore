@@ -4,3 +4,4 @@
 /var/cache/*
 /var/docker/*
 /.env
+docker-compose.override.yml
