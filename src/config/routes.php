@@ -28,4 +28,8 @@ return function (App $app) {
     $app->group('/api/v1/auth', function (Group $group) {
         $group->post('/login', ApiAction\Auth\LoginAction::class);
     });
+
+    $app->group('/api/v1/courier', function (Group $group) {
+        $group->get('/self', ApiAction\Courier\SelfAction::class);
+    });
 };

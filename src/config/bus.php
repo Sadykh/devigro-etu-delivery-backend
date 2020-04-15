@@ -16,7 +16,7 @@ return function (Container $container) {
 
             $config = [
                 Command\User\Command\LoginUserCommand::class => Command\User\Handler\LoginUserHandler::class,
-
+                Query\User\Query\GetUserQuery::class => Query\User\Handler\GetUserHandler::class,
             ];
 
             return new Infrastructure\CommandBus($container, $config);

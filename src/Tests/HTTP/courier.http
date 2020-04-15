@@ -1,0 +1,8 @@
+### valid login admin auth
+GET {{host-url}}/courier/self
+Cache-Control: no-cache
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###

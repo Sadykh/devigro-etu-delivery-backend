@@ -7,6 +7,7 @@ namespace App\Infrastructure\Repository\User;
 use App\Domain\User\Exception\UserNotFoundException;
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
+use App\Domain\User\ValueObject\User\AuthToken;
 use App\Domain\User\ValueObject\User\Email;
 use App\Domain\User\ValueObject\UserId;
 use App\Infrastructure\Repository\Common\AbstractRepository;
@@ -53,6 +54,17 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     public function getByEmail(Email $email): User
     {
         $item = $this->findOneBy(['email' => $email, 'isRemoved' => false]);
+
+        if ($item === null) {
+            throw new UserNotFoundException();
+        }
+
+        return $item;
+    }
+
+    public function getByAuthToken(AuthToken $authToken): User
+    {
+        $item = $this->findOneBy(['authToken' => $authToken, 'isRemoved' => false]);
 
         if ($item === null) {
             throw new UserNotFoundException();
