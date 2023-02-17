@@ -17,7 +17,7 @@
     "ramsey/uuid": "^3.8",
     "slim/twig-view": "^2.5",
     "swiftmailer/swiftmailer": "^6.2",
-    "firebase/php-jwt": "^5.0",
+    "firebase/php-jwt": "^6.0",
     "aws/aws-sdk-php": "^3.109",
     "shadz3rg/php-stamp": "^0.2.3",
     "yandex-money/yandex-checkout-sdk-php": "^1.5",
