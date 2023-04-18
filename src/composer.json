@@ -4,7 +4,7 @@
     "ext-json": "*",
     "ext-mbstring": "*",
     "slim/slim": "^4.1",
-    "slim/psr7": "^0.4.0",
+    "slim/psr7": "^1.6.1",
     "symfony/dotenv": "^4.3",
     "beberlei/assert": "^3.2",
     "php-di/php-di": "^6.0",
